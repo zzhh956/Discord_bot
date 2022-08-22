@@ -55,7 +55,7 @@ class Portfolio(create_db.DB):
         buy_price = data[4]
         shares = data[5]
         curr_date = datetime.date.today()
-        curr_price = random.randint(200, 1000)
+        curr_price = random.uniform(buy_price * 0.25, buy_price * 2)
         pnl = (curr_price - buy_price) * shares
         pnl_percentage = '{0:.0f}%'.format(pnl / (buy_price * shares) * 100) 
         
