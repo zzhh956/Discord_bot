@@ -2,8 +2,8 @@ import discord as dc
 import discord.ext.commands as cmds
 import create_db
 
-channel_id = 1006190759344623737     # Change it
-token = 'MTAwNjE5MzE4NTYxOTQ0Mzg0NA.GmxjEi.t5uq5ZFeW3aVvnpSWypvE2NDO_ZVTr-sLRDH0M'    # Change it
+channel_id = 10059344637     # Change it
+token = 'MTAwNj'    # Change it
 cmd_prefix = '!'            # Change it
 bot = cmds.Bot(command_prefix=cmd_prefix, intents=dc.Intents.all())  
 
