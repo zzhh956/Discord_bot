@@ -3,10 +3,10 @@ import pymysql
 import datetime
 
 class DB:
-    server_name = 'SocialFi_discord'
+    server_name = 'discord'
     database_host = '127.0.0.2'
     database_user_name = 'root'
-    database_password = 'M0y7S1Q0L846'
+    database_password = 'M06'
     database_server_IP = '127.0.0.1'
     database_port = 3306
 
