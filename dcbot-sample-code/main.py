@@ -1,9 +1,10 @@
+import datetime
 import discord as dc
 import discord.ext.commands as cmds
-import create_db
+import portfolio
 
-channel_id = 10059344637     # Change it
-token = 'MTAwNj'    # Change it
+channel_id = 1006190759344623737     # Change it
+token = 'MTAwNjE5MzE4NTYxOTQ0Mzg0NA.Ghs8Ni.YLhKX5_u_5HkGUDSOjfkZuc3uDEaqNd7Jz5XDA'    # Change it
 cmd_prefix = '!'            # Change it
 bot = cmds.Bot(command_prefix=cmd_prefix, intents=dc.Intents.all())  
 
@@ -12,8 +13,8 @@ async def on_ready():
     await bot.wait_until_ready()
     print('>> Bot is on ready <<')
     c = bot.get_channel(channel_id)
-    create_db.Portfolio.create_database()
-    create_db.Portfolio.Create_Portfolio_table()
+    portfolio.Portfolio.create_database()
+    portfolio.Portfolio.Create_Portfolio_table()
     await c.send('>> 您的股票小幫手已上線 <<')
     print('listening to commands...')
 
@@ -23,7 +24,7 @@ async def hi(ctx: cmds.Context):
 
 @bot.command()
 async def drop(ctx: cmds.Context):
-    if create_db.Portfolio.Drop_Portfolio_table():
+    if portfolio.Portfolio.Drop_Portfolio_table():
         await ctx.send('已刪除表格')
     else:
         await ctx.send('刪除表格失敗')
@@ -32,7 +33,7 @@ async def drop(ctx: cmds.Context):
 
 @bot.command()
 async def create(ctx: cmds.Context):
-    if create_db.Portfolio.Create_Portfolio_table():
+    if portfolio.Portfolio.Create_Portfolio_table():
         await ctx.send('已新增表格')
     else:
         await ctx.send('新增表格失敗')
@@ -42,7 +43,7 @@ async def create(ctx: cmds.Context):
 @bot.command()
 async def buy(ctx: cmds.context, code: int, firm: str, holder_name: str, date: str, price: float, shares: int):
     data = [code, firm, holder_name, date, price, shares]
-    if create_db.Portfolio.Insert_Portfolio_table(data):
+    if portfolio.Portfolio.Insert_Portfolio_table(data):
         await ctx.send('已更新表格')
     else:
         await ctx.send('資料格式輸入有誤')
@@ -52,10 +53,22 @@ async def buy(ctx: cmds.context, code: int, firm: str, holder_name: str, date: s
 # @bot.command()
 # async def sell(ctx: cmds.context, code: int, firm: str, holder_name: str, shares: int):
 
-# @bot.command()
-# async def show(ctx: cmds.context):
+@bot.command()
+async def show(ctx: cmds.context, name: str):
+    data = []
+    check, data = portfolio.Portfolio.Select_Portfolio_table(name)
 
+    if check:
+        await ctx.send('今天日期: ' + str(datetime.date.today()))
+        await ctx.send('持有人: ' + name)
+        await ctx.send('代號       公司        持有日期       持有價格       持有量(股)       損益       損益(%)       現在價格')
+        for row in data:
+            await ctx.send(row['代號'] + '     ' + row['公司名稱'] + '     ' + str(row['持有日期']) + '       ' + str(row['持有價格']) + '            ' + str(row['持有量(股)']) 
+            + '                 ' + str(row['損益']) + '             ' + str(row['損益(%)']) + '             ' + str(row['現在價格']))
+    else:
+        await ctx.send('擷取資料失敗')
 
+    print('listening to commands...')
 
 # img_path = ['./imgs/a.PNG', './imgs/b.PNG']    # Change it
 
