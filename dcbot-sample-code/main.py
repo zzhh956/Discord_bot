@@ -47,8 +47,8 @@ async def create(ctx: cmds.Context):
     print('listening to commands...')
 
 @bot.command()
-async def buy(ctx: cmds.context, code: int, firm: str, holder_name: str, date: str, price: float, shares: int):
-    data = [code, firm, holder_name, date, price, shares]
+async def buy(ctx: cmds.context, code: int, firm: str, holder_name: str, date: str, shares: int, price: float):
+    data = [code, firm, holder_name, date, shares, price]
     if portfolio.Portfolio.Insert_Portfolio_table(data):
         await ctx.send('已更新表格')
     else:
@@ -60,17 +60,17 @@ async def buy(ctx: cmds.context, code: int, firm: str, holder_name: str, date: s
 # async def sell(ctx: cmds.context, code: int, firm: str, holder_name: str, shares: int):
 
 @bot.command()
-async def show(ctx: cmds.context, name: str):
+async def show(ctx: cmds.context, holder_name: str):
     data = []
-    check, data = portfolio.Portfolio.Select_Portfolio_table(name)
+    check, data = portfolio.Portfolio.Select_Portfolio_table(holder_name)
 
     if check:
         await ctx.send('今天日期: ' + str(datetime.date.today()))
-        await ctx.send('持有人: ' + name)
-        await ctx.send('代號       公司        持有日期       持有價格       持有量(股)       損益       損益(%)       現在價格')
+        await ctx.send('持有人: ' + holder_name)
+        await ctx.send('代號       公司        張數(股)       持有價格       現在價格       損益       損益(%)       持有日期')
         for row in data:
-            await ctx.send(row['代號'] + '     ' + row['公司名稱'] + '     ' + str(row['持有日期']) + '       ' + str(row['持有價格']) + '            ' + str(row['持有量(股)']) 
-            + '                 ' + str(row['損益']) + '             ' + str(row['損益(%)']) + '             ' + str(row['現在價格']))
+            await ctx.send(str(row['代號']) + '     ' + row['公司'] + '         ' + str(row['張數(股)']) + '                ' + str(row['持有價格']) + '            ' +
+             str(row['現在價格']) + '      ' + str(row['損益']) + '       ' + str(row['損益(%)']) + '            ' + str(row['持有日期']))
     else:
         await ctx.send('擷取資料失敗')
 

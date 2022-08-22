@@ -26,10 +26,6 @@ class DB:
             sqlStatement = "CREATE DATABASE IF NOT EXISTS " + cls.database_name
             cursor.execute(sqlStatement)
 
-            # sqlQuery = "SHOW DATABASES"
-            # cursor.execute(sqlQuery)
-            # print(cursor.fetchall())
-            # print('database creating succeed')
             print("database is created successfully!")
 
         except Exception as e:
