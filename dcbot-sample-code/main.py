@@ -3,8 +3,8 @@ import discord as dc
 import discord.ext.commands as cmds
 import portfolio
 
-channel_id = 1006190759344623737     # Change it
-token = 'MTAwNjE5MzE4NTYxOTQ0Mzg0NA.Ghs8Ni.YLhKX5_u_5HkGUDSOjfkZuc3uDEaqNd7Jz5XDA'    # Change it
+channel_id = 100644623737     # Change it
+token = 'MTAwNj'    # Change it
 cmd_prefix = '!'            # Change it
 bot = cmds.Bot(command_prefix=cmd_prefix, intents=dc.Intents.all())  
 
