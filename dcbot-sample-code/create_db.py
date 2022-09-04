@@ -1,20 +1,20 @@
 import pymysql
 
 class DB:
-    server_name = 'SocialFi_discord'
-    database_host = '127.0.0.2'
-    database_user_name = 'root'
-    database_password = ''
-    database_server_IP = '127.0.0.1'
-    database_port = 3306
+    server_name = ''
+    server_host = '127.0.0.2'
+    server_user_name = 'root'
+    server_password = ''
+    server_IP = '127.0.0.1'
+    server_port = 3306
 
     #name of database
-    database_name = "portfolio"
+    database_name = {'personal_info': "personal_info", 'stocks': "stocks_info"}
 
     @classmethod
     def connect_database(cls):
-        return pymysql.connect(host=cls.database_host, user=cls.database_user_name, password=cls.database_password,
-                                port=cls.database_port, cursorclass=pymysql.cursors.DictCursor)
+        return pymysql.connect(host=cls.server_host, user=cls.server_user_name, password=cls.server_password,
+                                port=cls.server_port, cursorclass=pymysql.cursors.DictCursor)
 
     @classmethod
     def create_database(cls):
@@ -23,8 +23,9 @@ class DB:
         try:
             cursor = connect.cursor()
 
-            sqlStatement = "CREATE DATABASE IF NOT EXISTS " + cls.database_name
-            cursor.execute(sqlStatement)
+            for key, name in cls.database_name.items():
+                sqlStatement = "CREATE DATABASE IF NOT EXISTS " + name
+                cursor.execute(sqlStatement)
 
             print("database is created successfully!")
 
